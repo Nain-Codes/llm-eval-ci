@@ -15,10 +15,10 @@
   <body>
     <h3>Register</h3>
 
-    <form method="POST" action="">
-      {% csrf_token %} {{user_form.as_p}}
+    <form method="POST" action="{% url 'register' %}">
+      {% csrf_token %} {{ form }}
 
-      <input type="submit" name="Create User" />
+      <input type="submit" value="Submit" class="btn btn-secondary" />
     </form>
 
     <script
