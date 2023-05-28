@@ -1,0 +1,44 @@
+{% extends 'main.html' %} {% block content %}
+
+<table class="table">
+  <tr>
+    <th>Id</th>
+    <th>title</th>
+    <th>description</th>
+    <th>metric</th>
+    <th>Business Measurement</th>
+    <th>Change Status</th>
+    <th>Profit Center Id</th>
+    <th>Update</th>
+    <th>Remove</th>
+  </tr>
+  {% for item in profit_objs %}
+  <tr>
+    <td>{{item.id}}</td>
+    <td>{{item.title}}</td>
+    <td>{{item.description}}</td>
+    <td>{{item.metric}}</td>
+    <td>{{item.businessMeasurement}}</td>
+    <td>{{item.changeStatus}}</td>
+    <td>{{item.profitCenterId}}</td>
+    <td>
+      <a href="{% url 'updatebusiness' item.id %}" class="btn btn-primary"
+        >Update</a
+      >
+    </td>
+    <td>
+      <a href="{% url 'deletebusiness' item.id %}" class="btn btn-danger"
+        >Remove</a
+      >
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<a
+  href="{% url 'businessobjective' %}"
+  class="btn btn-secondary show-all white blue"
+  >Add Business Objective</a
+>
+
+{% endblock %}

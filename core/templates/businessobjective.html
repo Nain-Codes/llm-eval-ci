@@ -1,0 +1,21 @@
+{% extends 'main.html' %} {% block content %}
+
+<div class="m-3">
+  <h3>Add Business Objective</h3>
+  <form action="" method="POST">
+    {% csrf_token %} {% for field in form %}
+    <div class="form-group">
+      {{ field.errors }}
+      <div>{{ field.label_tag }}</div>
+      <div>{{ field }}</div>
+    </div>
+    {% endfor %}
+    <input
+      type="submit"
+      name="submit"
+      class="btn btn-success mb-2 submit"
+      value="Submit"
+    />
+  </form>
+</div>
+{% endblock %}

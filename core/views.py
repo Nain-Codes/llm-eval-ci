@@ -2,14 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import RegisterationForm, ProfitCenterForm
+from .forms import *
 from .models import *
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import JSONParser
-from django.http.response import JsonResponse
 
 
-# @login_required(login_url='login')
+@login_required(login_url='login')
 def main_index(request):
     return render(request, 'main.html')
 
@@ -58,7 +56,7 @@ def logout_view(request):
 
 
 
-
+@login_required(login_url='login')
 @csrf_exempt
 def profit_center(request):
     form = ProfitCenterForm()
@@ -98,6 +96,85 @@ def delete_profit(request, pk):
     return redirect('/listall')       
 
 
+@login_required(login_url='login')
+@csrf_exempt
+def business_objective(request):
+    form = BussinessObjectiveForm()
+    if request.method == "POST":
+        form = BussinessObjectiveForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('/listbusiness')
+    context = {"form":form}
+    return render(request,'businessobjective.html', context)
+    
+
+#view for rendering listall profit center page
+
+def business_objective_list(request):
+    profit_objs = BusinessObjective.objects.all()
+    return render(request, 'businesslist.html', {"profit_objs":profit_objs})
+
+
+#view for rendering and handling update profit center
+
+def update_business_objective(request, pk):
+    profit_obj = BusinessObjective.objects.get(id = pk)
+    form = BussinessObjectiveForm(instance=profit_obj)
+    if request.method == "POST":
+        form = BussinessObjectiveForm(request.POST, instance=profit_obj)
+        if form.is_valid():
+            form.save()
+        return redirect('/listall')
+    context = {"form":form, "id":pk}
+    return render(request, 'business_update.html', context)
+
+
+def delete_business_objective(request, pk):
+    profit_obj = BusinessObjective.objects.get(id = pk)
+    profit_obj.delete()
+    return redirect('/listbusiness')       
+
+
+@login_required(login_url='login')
+@csrf_exempt
+def bizneed(request):
+    form = BizNeedForm()
+    if request.method == "POST":
+        form = BizNeedForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('/listbizneed')
+    context = {"form":form}
+    return render(request,'bizneed.html', context)
+    
+
+#view for rendering listall profit center page
+
+def list_bizneed(request):
+    profit_objs = BizNeed.objects.all()
+    return render(request, 'listbizneed.html', {"profit_objs":profit_objs})
+
+
+#view for rendering and handling update profit center
+
+def update_bizneed(request, pk):
+    profit_obj = BizNeed.objects.get(id = pk)
+    form = BizNeedForm(instance=profit_obj)
+    if request.method == "POST":
+        form = BizNeedForm(request.POST, instance=profit_obj)
+        if form.is_valid():
+            form.save()
+        return redirect('/listbizneed')
+    context = {"form":form, "id":pk}
+    return render(request, 'bizneed_update.html', context)
+
+
+def delete_bizneed(request, pk):
+    profit_obj = BizNeed.objects.get(id = pk)
+    profit_obj.delete()
+    return redirect('/listbizneed')       
+
 # @login_required(login_url='login/')
 # @csrf_exempt
 # def profitCenterApi(request, id=0):
@@ -122,35 +199,6 @@ def delete_profit(request, pk):
 #         return JsonResponse('failed to update',safe=False)
 #     elif request.method=='DELETE':
 #         user = BusinessObjective.objects.get(userId=id)
-#         user.delete()
-#         return JsonResponse('deleted', safe=False)
-#     return JsonResponse('delete failed', safe=False)
-
-
-# @login_required(login_url='login/')
-# @csrf_exempt
-# def bizNeedApi(request, id=0):
-#     if request.method=='GET':
-#         user = BizNeed.objects.all()
-#         profitcenter_serializers = ProfitCenterSerializer(user, many=True)
-#         return JsonResponse(profitcenter_serializers.data, safe=False)
-#     elif request.method=='POST':
-#         user_data = JSONParser().parse(request)
-#         profitcenter_serializers = ProfitCenterSerializer(data=user_data)
-#         if profitcenter_serializers.is_valid():
-#             profitcenter_serializers.save()
-#             return JsonResponse('Added', safe=False)
-#         return JsonResponse('not Added', safe=False)
-#     elif request.method=='PUT':
-#         user_data = JSONParser().parse(request)
-#         user = BizNeed.objects.get(userId=user_data['userId'])
-#         user_serializers = ProfitCenterSerializer(user, data=user_data)
-#         if user_serializers.is_valid():
-#             user_serializers.save()
-#             return JsonResponse('updated', safe=False)
-#         return JsonResponse('failed to update',safe=False)
-#     elif request.method=='DELETE':
-#         user = BizNeed.objects.get(userId=id)
 #         user.delete()
 #         return JsonResponse('deleted', safe=False)
 #     return JsonResponse('delete failed', safe=False)

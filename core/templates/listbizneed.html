@@ -1,0 +1,38 @@
+{% extends 'main.html' %} {% block content %}
+
+<table class="table">
+  <tr>
+    <th>Id</th>
+    <th>Description</th>
+    <th>delivery Product</th>
+    <th>Jsonfield</th>
+    <th>Business Objective Id</th>
+    <th>Update</th>
+    <th>Remove</th>
+  </tr>
+  {% for item in profit_objs %}
+  <tr>
+    <td>{{item.id}}</td>
+    <td>{{item.description}}</td>
+    <td>{{item.deliveryProduct}}</td>
+    <td>{{item.Jsonfield}}</td>
+    <td>{{item.businessObjectiveId}}</td>
+    <td>
+      <a href="{% url 'updatebizneed' item.id %}" class="btn btn-primary"
+        >Update</a
+      >
+    </td>
+    <td>
+      <a href="{% url 'deletebizneed' item.id %}" class="btn btn-danger"
+        >Remove</a
+      >
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<a href="{% url 'bizneed' %}" class="btn btn-secondary show-all white blue"
+  >Add Bizneed</a
+>
+
+{% endblock %}
