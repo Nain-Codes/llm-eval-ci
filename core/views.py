@@ -48,11 +48,11 @@ def login_user(request):
         print("User Error")
         return render(request, 'register/login.html', {})
 
-
+@login_required(login_url='login')
 def logout_view(request):
     logout(request)
     messages.success(request, ("logged out"))
-    return redirect('login')
+    return redirect('/login')
 
 
 
@@ -70,14 +70,14 @@ def profit_center(request):
     
 
 #view for rendering listall profit center page
-
+@login_required(login_url='login')
 def list_all(request):
     profit_objs = ProfitCenter.objects.all()
     return render(request, 'listall.html', {"profit_objs":profit_objs})
 
 
 #view for rendering and handling update profit center
-
+@login_required(login_url='login')
 def update_profit(request, pk):
     profit_obj = ProfitCenter.objects.get(id = pk)
     form = ProfitCenterForm(instance=profit_obj)
@@ -89,7 +89,7 @@ def update_profit(request, pk):
     context = {"form":form, "id":pk}
     return render(request, 'update.html', context)
 
-
+@login_required(login_url='login')
 def delete_profit(request, pk):
     profit_obj = ProfitCenter.objects.get(id = pk)
     profit_obj.delete()
@@ -110,14 +110,14 @@ def business_objective(request):
     
 
 #view for rendering listall profit center page
-
+@login_required(login_url='login')
 def business_objective_list(request):
     profit_objs = BusinessObjective.objects.all()
     return render(request, 'businesslist.html', {"profit_objs":profit_objs})
 
 
 #view for rendering and handling update profit center
-
+@login_required(login_url='login')
 def update_business_objective(request, pk):
     profit_obj = BusinessObjective.objects.get(id = pk)
     form = BussinessObjectiveForm(instance=profit_obj)
@@ -129,7 +129,7 @@ def update_business_objective(request, pk):
     context = {"form":form, "id":pk}
     return render(request, 'business_update.html', context)
 
-
+@login_required(login_url='login')
 def delete_business_objective(request, pk):
     profit_obj = BusinessObjective.objects.get(id = pk)
     profit_obj.delete()
@@ -150,14 +150,14 @@ def bizneed(request):
     
 
 #view for rendering listall profit center page
-
+@login_required(login_url='login')
 def list_bizneed(request):
     profit_objs = BizNeed.objects.all()
     return render(request, 'listbizneed.html', {"profit_objs":profit_objs})
 
 
 #view for rendering and handling update profit center
-
+@login_required(login_url='login')
 def update_bizneed(request, pk):
     profit_obj = BizNeed.objects.get(id = pk)
     form = BizNeedForm(instance=profit_obj)
@@ -169,36 +169,10 @@ def update_bizneed(request, pk):
     context = {"form":form, "id":pk}
     return render(request, 'bizneed_update.html', context)
 
-
+@login_required(login_url='login')
 def delete_bizneed(request, pk):
     profit_obj = BizNeed.objects.get(id = pk)
     profit_obj.delete()
     return redirect('/listbizneed')       
 
-# @login_required(login_url='login/')
-# @csrf_exempt
-# def profitCenterApi(request, id=0):
-#     if request.method=='GET':
-#         user = BusinessObjective.objects.all()
-#         profitcenter_serializers = ProfitCenterSerializer(user, many=True)
-#         return JsonResponse(profitcenter_serializers.data, safe=False)
-#     elif request.method=='POST':
-#         user_data = JSONParser().parse(request)
-#         profitcenter_serializers = ProfitCenterSerializer(data=user_data)
-#         if profitcenter_serializers.is_valid():
-#             profitcenter_serializers.save()
-#             return JsonResponse('Added', safe=False)
-#         return JsonResponse('not Added', safe=False)
-#     elif request.method=='PUT':
-#         user_data = JSONParser().parse(request)
-#         user = BusinessObjective.objects.get(userId=user_data['userId'])
-#         user_serializers = ProfitCenterSerializer(user, data=user_data)
-#         if user_serializers.is_valid():
-#             user_serializers.save()
-#             return JsonResponse('updated', safe=False)
-#         return JsonResponse('failed to update',safe=False)
-#     elif request.method=='DELETE':
-#         user = BusinessObjective.objects.get(userId=id)
-#         user.delete()
-#         return JsonResponse('deleted', safe=False)
-#     return JsonResponse('delete failed', safe=False)
+
