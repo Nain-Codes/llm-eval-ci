@@ -29,3 +29,4 @@ uvicorn src.app:app --reload
 docker build -t tool-exec-service:latest .
 docker run --rm -p 8000:8000 tool-exec-service:latest
 ```
+**Tech Stack:** Python · FastAPI · Docker · GitHub Actions · Pytest · CI/CD · Infrastructure-as-Code principles
