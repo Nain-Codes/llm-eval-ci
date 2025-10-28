@@ -1,4 +1,5 @@
 # tool-exec-service
+![CI](https://github.com/Nain-Codes/tool-exec-service/actions/workflows/ci.yml/badge.svg)
 
 A small, production-style **tool execution service** for running allowed developer tools (e.g., `pytest`) in a controlled subprocess.
 It emphasizes reproducibility and operational hygiene:
