@@ -1,8 +1,7 @@
 # tool-exec-service
 ![CI](https://github.com/Nain-Codes/tool-exec-service/actions/workflows/ci.yml/badge.svg)
 
-A small, production-style **tool execution service** for running allowed developer tools (e.g., `pytest`) in a controlled subprocess.
-It emphasizes reproducibility and operational hygiene:
+Tool Exec Service is a lightweight, production-style execution framework that safely runs developer tools like pytest in controlled environments. It focuses on reproducibility, Dockerized builds, and GitHub Actions automation, demonstrating clean DevOps and ML engineering practices for real-world agent and LLM infrastructure.
 
 - **Dockerized build**
 - **GitHub Actions** pipeline (unit tests, integration run, report artifact)
