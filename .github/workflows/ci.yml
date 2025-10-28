@@ -3,7 +3,7 @@ name: ci
 on:
   push:
   pull_request:
-  workflow_dispatch:  # allows you to run manually
+  workflow_dispatch:  # allows manual runs
 
 jobs:
   test-and-run:
@@ -21,18 +21,23 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e .
           pip install pytest
+          pip install -e .
+
+      - name: Verify project structure
+        run: ls -R
 
       - name: Run unit tests
-        # Add repo root to PYTHONPATH so imports like "from src..." work
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
-          export PYTHONPATH=.
-          pytest -q
+          echo "PYTHONPATH is $PYTHONPATH"
+          pytest -v
 
-      - name: Run tool execution task
+      - name: Tool execution (pytest on workspace)
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
-          export PYTHONPATH=.
           python -m src.run_once --task pytest --path workspace --out artifacts/report.md
 
       - name: Upload test artifact
@@ -40,4 +45,5 @@ jobs:
         with:
           name: execution-report
           path: artifacts/report.md
+
 
