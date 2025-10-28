@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tool-exec-service"
+version = "0.1.0"
+description = "Tool execution service with Docker, CI, and artifact reporting"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.110.0",
+    "uvicorn>=0.29.0",
+    "pytest>=8.0.0",
+    "pydantic>=2.6.0",
+]
